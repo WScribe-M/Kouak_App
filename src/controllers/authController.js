@@ -32,7 +32,7 @@ const login = async (req, res) => {
     if (!isPasswordValid) {
       return res.status(400).json({ message: 'Invalid email or password' });
     }
-    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ userId: user.id, email: user.email, username: user.nom_utilisateur }, process.env.JWT_SECRET, { expiresIn: '1h' });
     res.status(200).json({ message: 'Login successful', token, userId: user.id, nom_utilisateur: user.nom_utilisateur });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
@@ -43,3 +43,4 @@ module.exports = {
   register,
   login
 };
+
